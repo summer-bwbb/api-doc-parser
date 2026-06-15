@@ -1,0 +1,3 @@
+[doc-fetch]
+description = "Fetch API documentation from URL or local file"
+command = "activate_skill('doc-fetch')"

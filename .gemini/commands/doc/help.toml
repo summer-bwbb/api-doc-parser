@@ -1,0 +1,3 @@
+[doc-help]
+description = "Display help for the api-doc-parser skill suite"
+command = "activate_skill('doc-help')"

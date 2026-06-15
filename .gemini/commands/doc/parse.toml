@@ -1,0 +1,3 @@
+[doc-parse]
+description = "Parse API documentation and extract endpoints"
+command = "activate_skill('doc-parse')"

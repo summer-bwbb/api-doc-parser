@@ -1,0 +1,3 @@
+[doc-list]
+description = "List API modules (tags) from an OpenAPI/Swagger document"
+command = "activate_skill('doc-list')"
