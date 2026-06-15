@@ -5,6 +5,23 @@ description: Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint
 
 # API Doc Parser
 
+## v2: Fine-grained Control
+
+For step-by-step control, use the slash commands:
+
+| Command | Purpose |
+|---------|---------|
+| `/doc:fetch <URL\|file>` | Fetch and validate API documentation source |
+| `/doc:list [query]` | List modules and select which to parse |
+| `/doc:parse [query] [-a\|-b]` | Extract endpoints and generate output |
+| `/doc:help` | Show usage instructions and examples |
+
+Or invoke sub-skills directly via the Skill tool: `doc-fetch`, `doc-list`, `doc-parse`, `doc-help`.
+
+The pipeline still works as a single natural-language request — just say "Parse API docs from <URL>" and the agent will chain through all phases automatically.
+
+---
+
 Parse OpenAPI 3.x and Swagger 2.0 API documentation by module. Extract full endpoint details with context overflow protection. Dual-format output: Markdown (copy-paste ready) and JSON (cross-session referenceable).
 
 **CRITICAL — Context overflow prevention:** Never read the raw OpenAPI JSON file into the Agent context. Always use jq in the shell layer to pre-filter. The full JSON stays in temp files; only filtered results enter context.
