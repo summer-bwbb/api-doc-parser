@@ -1,0 +1,38 @@
+{
+  "name": "api-doc-parser-skill",
+  "version": "2.0.0",
+  "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation with fine-grained sub-skills. Supports 9 AI coding platforms, 3 installation methods.",
+  "author": "summer-xbw",
+  "license": "MIT",
+  "keywords": ["api", "openapi", "swagger", "documentation", "parser", "agent-skill", "ai-coding-assistant"],
+  "files": [
+    "skills/",
+    ".claude/",
+    ".cursor/",
+    ".codex/",
+    ".gemini/",
+    ".kimi/",
+    ".qoder/",
+    ".trae/",
+    ".opencode/",
+    ".github/",
+    ".claude-plugin/",
+    ".cursor-plugin/",
+    ".codex-plugin/",
+    "hooks/",
+    "scripts/",
+    "docs/",
+    "SKILL.md",
+    "metadata.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "preuninstall": "node scripts/preuninstall.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/summer-xbw/api-doc-parser"
+  }
+}

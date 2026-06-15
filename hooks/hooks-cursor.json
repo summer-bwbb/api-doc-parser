@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "command": "cat skills/using-api-doc-parser/SKILL.md"
+      }
+    ]
+  }
+}
