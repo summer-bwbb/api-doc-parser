@@ -1,0 +1,13 @@
+{
+  "name": "api-doc-parser",
+  "version": "1.0.0",
+  "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation by module (tag), extract endpoint details, and output Markdown + structured JSON. Supports URL fetch and local file import with built-in context overflow protection via jq pipelines.",
+  "author": "custom",
+  "date": "2026-06-15",
+  "references": [
+    "https://swagger.io/specification/",
+    "https://spec.openapis.org/oas/v3.1.0",
+    "https://springdoc.org/",
+    "https://jqlang.github.io/jq/"
+  ]
+}
