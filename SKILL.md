@@ -211,13 +211,19 @@ The `===ENDPOINT===` delimiter separates endpoints. For each endpoint block:
 
 **Request body:** If present and non-empty:
 - `required` — boolean
-- For each content type: `schema.$ref` — record the reference name only
+- For each content type: resolve `schema.$ref` into full field definitions (see $ref handling below)
 
 **Responses:** For each status code:
 - `description` — human-readable description
-- For each content type: `schema.$ref` — record the reference name only
+- For each content type: resolve `schema.$ref` into full field definitions (see $ref handling below)
 
-**$ref handling (v1):** Only record the reference name (the last segment after `/`). Do NOT expand into `components/schemas`. Display as: `→ ResultDTOOdmTaskListResponse`. The user can look up the schema in Swagger UI.
+**$ref handling (v2):** Resolve all `$ref` references into full field definitions:
+
+1. **Collect unique $ref names** from extracted endpoint responses and requestBody (deduplicate).
+2. **Batch-resolve** each schema from `components/schemas/<name>` via jq — extract type, description, required, and all property fields.
+3. **Recursive expansion** (depth limit: 2) — if a resolved schema contains nested $ref fields, resolve those too. Beyond 2 levels: show `-> SchemaName（递归上限，请查看 Swagger UI）`.
+4. **Circular reference detection** — if a schema name was already resolved at an earlier depth, do not re-resolve. Show `-> SchemaName（循环引用）`.
+5. **Dedup and cache** — same schema referenced by multiple endpoints/status codes is resolved only once and reused.
 
 ### Empty module handling
 
@@ -233,7 +239,7 @@ Continue processing remaining selected modules.
 
 ### Format A: Markdown (human-readable)
 
-For each module, generate the following Markdown structure:
+For each module, generate the following Markdown structure with **fully expanded schemas**:
 
 ```markdown
 # <Module Name>
@@ -257,29 +263,55 @@ For each module, generate the following Markdown structure:
 | userId | query | string | Yes | — | User unique identifier |
 | page | query | integer | No | 1 | Page number |
 
-### Request Body
+### Request Body (application/json, required)
 
-| Content-Type | Required | Schema |
-|-------------|----------|--------|
-| application/json | Yes | → ResultDTOOdmTaskListResponse |
+#### SchemaName
+
+| 字段 | 类型 | 必填 | 描述 |
+|------|------|------|------|
+| highPointMonitorId | integer(int64) | Yes | 主键ID（编辑时必填） |
+| name | string | No | 名称 |
+| ... | | | |
+
+> If the Request Body schema contains nested $ref fields, expand them as sub-tables.
 
 ### Responses
 
 | Status | Description | Schema |
 |--------|-------------|--------|
-| 200 | OK | → ResultDTOOdmTaskListResponse |
-| 400 | Bad Request | — |
-| 500 | Internal Server Error | — |
+| 200 | OK | ResultDTOIPageHighPointMonitorDTO |
+| 400 | Bad Request | ResultDTOVoid |
+| 500 | Internal Server Error | ResultDTOVoid |
 
----
+#### 200 OK — ResultDTOIPageHighPointMonitorDTO
+
+| 字段 | 类型 | 描述 |
+|------|------|------|
+| errorCode | string | 错误码 |
+| errorMsg | string | 错误消息 |
+| data | IPageHighPointMonitorDTO | 数据（详见下方） |
+
+#### IPageHighPointMonitorDTO
+
+| 字段 | 类型 | 描述 |
+|------|------|------|
+| size | integer(int64) | 每页大小 |
+| records | array<HighPointMonitorDTO> | 记录列表 |
+| ... | | |
+
+> **Dedup:** Multiple status codes sharing the same schema are merged.
+
 ```
 
 **Rules:**
 - Separator line `---` between endpoints
-- Parameters table: skip if empty, show "None" row
-- Request body section: skip if no request body
-- Schema references: show as `→ RefName` (arrow + last segment of $ref)
+- Parameters table: skip if empty, show "无参数"
+- Request body section: skip if no request body; otherwise expand schema as field table with columns `字段 | 类型 | 必填 | 描述`
+- Responses: expand each unique schema as field table with columns `字段 | 类型 | 描述`; nested schemas shown as sub-tables
+- **Dedup shared schemas:** Multiple status codes with the same schema merged into one section
 - Group endpoints by HTTP method: GET first, then POST, PUT, DELETE, PATCH
+- Schema depth limit: 2 levels of nesting; beyond that show `-> SchemaName（递归上限，请查看 Swagger UI）`
+- Array types displayed as `array<TypeName>` when items contain a $ref
 
 ### Format B: Structured JSON
 
@@ -314,17 +346,47 @@ For each module, generate the following JSON structure:
           "description": "Page number"
         }
       ],
-      "requestBody": null,
+      "requestBody": {
+        "required": true,
+        "contentType": "application/json",
+        "schema": {
+          "name": "SaveHighPointMonitorParam",
+          "description": "高点监控数据",
+          "fields": [
+            {"name": "highPointMonitorId", "type": "integer", "format": "int64", "description": "主键ID（编辑时必填）", "required": true, "default": null, "nestedSchema": null},
+            {"name": "name", "type": "string", "format": null, "description": "名称", "required": false, "default": null, "nestedSchema": null}
+          ],
+          "nestedSchemas": {}
+        }
+      },
       "responses": [
         {
           "status": "200",
           "description": "OK",
-          "schemaRef": "ResultDTOOdmTaskListResponse"
+          "schema": {
+            "name": "ResultDTOLong",
+            "description": "通用返回结果",
+            "fields": [
+              {"name": "errorCode", "type": "string", "description": "错误码", "nestedSchema": null},
+              {"name": "errorMsg", "type": "string", "description": "错误消息", "nestedSchema": null},
+              {"name": "data", "type": "integer", "format": "int64", "description": "数据", "nestedSchema": null}
+            ],
+            "nestedSchemas": {}
+          }
         },
         {
-          "status": "500",
-          "description": "Internal Server Error",
-          "schemaRef": null
+          "status": "400",
+          "description": "Bad Request",
+          "schema": {
+            "name": "ResultDTOVoid",
+            "description": "通用返回结果",
+            "fields": [
+              {"name": "errorCode", "type": "string", "description": "错误码", "nestedSchema": null},
+              {"name": "errorMsg", "type": "string", "description": "错误消息", "nestedSchema": null},
+              {"name": "data", "type": "any", "description": "数据", "nestedSchema": null}
+            ],
+            "nestedSchemas": {}
+          }
         }
       ]
     }
@@ -334,7 +396,10 @@ For each module, generate the following JSON structure:
 
 **Rules:**
 - `null` for absent fields (not omitted)
-- `schemaRef` is the last segment of the `$ref`, or `null` if no schema reference
+- `requestBody` is `null` when absent; when present, contains full expanded schema object
+- `responses[].schema` contains a full schema object with `name`, `description`, `fields[]`, and `nestedSchemas{}`
+- Each field has: `name`, `type`, `format` (nullable), `description`, `required` (nullable), `default` (nullable), `nestedSchema` (string name or null)
+- `nestedSchemas` maps schema names to their own `{description, fields[]}` objects (depth limit: 2)
 - `parameters` is `[]` (empty array) when none, not `null`
 - Generate timestamp using: `date -u +"%Y-%m-%dT%H:%M:%SZ"`
 - Detect OpenAPI version from document: `jq -r '.openapi // .swagger' <source-file>`
@@ -440,6 +505,25 @@ Before full endpoint extraction, count endpoints for each selected module. If >3
 2. Warn user about context consumption
 3. Wait for explicit confirmation before full extraction
 
+### Rule 3b: Schema expansion depth limit
+
+When expanding $ref schemas from `components/schemas`:
+- Maximum 2 levels of recursive nesting
+- Beyond depth 2: display `-> SchemaName（递归上限，请查看 Swagger UI）`
+- Circular reference detection: if a schema was already resolved at an earlier depth, show `-> SchemaName（循环引用）`
+
+### Rule 3c: Schema deduplication
+
+Same schema referenced by multiple endpoints or status codes is resolved only once and reused. Never duplicate expanded schema output.
+
+### Rule 3d: Single schema field cap
+
+If a schema has >50 fields, show first 50 and note: `（字段过多，仅展示前 50 个，完整定义请查看 Swagger UI）`
+
+### Rule 3e: Schema queries via jq only
+
+Never read `components/schemas` raw into context. Always use jq filters to extract specific schemas by name.
+
 ### Rule 4: Local file size check
 
 For local `.json` files, run `wc -c <file>` first. If >262144 bytes (256KB):
@@ -454,7 +538,7 @@ For non-JSON files, use Read with `offset` and `limit` parameters (max 2000 line
 
 After parsing, optionally clean up temp files:
 ```bash
-rm -f /tmp/api-doc.json
+rm -f /tmp/api-doc.json /tmp/api-doc-parser/endpoints-raw.json
 ```
 This is optional — temp files are harmless and may be reused.
 
