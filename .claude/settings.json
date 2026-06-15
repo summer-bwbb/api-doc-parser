@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m 'Sync openspec delta specs to main specs *)"
+    ]
+  }
+}
