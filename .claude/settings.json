@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git commit -m 'Sync openspec delta specs to main specs *)"
+      "Bash(git commit -m 'Sync openspec delta specs to main specs *)",
+      "Bash(cat .claude/settings.json)",
+      "Bash(cat .claude/settings.local.json)"
     ]
   }
 }

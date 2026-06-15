@@ -8,8 +8,10 @@ Parse OpenAPI/Swagger API documentation from remote URLs or local files, extract
 
 ### Requirement: Dual input source support
 The skill SHALL support two input sources for API documentation:
-1. Remote URL (e.g., `http://host:port/path/v3/api-docs`) — fetched via curl
-2. Local file path — .json (OpenAPI/Swagger), .md (markdown documentation), .txt (plain text)
+1. Remote URL (e.g., `http://host:port/path/v3/api-docs`) — fetched via curl，handled by `doc-fetch` sub-skill
+2. Local file path — .json (OpenAPI/Swagger), .md (markdown documentation), .txt (plain text) — handled by `doc-fetch` sub-skill
+
+The source processing logic SHALL be delegated to the `doc-fetch` sub-skill, while the root `SKILL.md` retains backward-compatible natural language triggering that chains through the same sub-skills.
 
 #### Scenario: User provides URL
 - **WHEN** user inputs a valid HTTP/HTTPS URL
@@ -32,7 +34,7 @@ The skill SHALL support two input sources for API documentation:
 - **THEN** the skill SHALL report the error and offer retry or fallback to local file input
 
 ### Requirement: Module listing and selection
-The skill SHALL extract all API modules (tags) from the OpenAPI document and present them for user selection, supporting both numeric multi-select and keyword fuzzy matching.
+The skill SHALL extract all API modules (tags) from the OpenAPI document via the `doc-list` sub-skill, supporting both numeric multi-select and keyword fuzzy matching.
 
 #### Scenario: List all modules
 - **WHEN** `doc-list` is invoked without arguments
@@ -67,7 +69,7 @@ For each selected module, the skill SHALL delegate to `doc-parse` sub-skill to e
 
 #### Scenario: $ref schema handling
 - **WHEN** an endpoint's response or request body contains a `$ref` reference
-- **THEN** the skill SHALL record the reference name without expanding it (v1 behavior)
+- **THEN** the skill SHALL record the reference name without expanding it
 
 #### Scenario: Empty module
 - **WHEN** a selected module has no endpoints
@@ -78,11 +80,11 @@ The skill SHALL generate both Markdown (human-readable, copy-paste ready) and st
 
 #### Scenario: Generate Markdown output
 - **WHEN** endpoint extraction completes
-- **THEN** the skill SHALL produce a Markdown document with module title, module description, endpoint count, and per-endpoint sections containing: method + URL + summary header, description, request parameters table, response table, and separator lines
+- **THEN** the skill SHALL produce a Markdown document with module title, module description, endpoint count, and per-endpoint sections
 
 #### Scenario: Generate JSON output
 - **WHEN** endpoint extraction completes
-- **THEN** the skill SHALL produce a JSON document with meta (sourceUrl, generatedAt, openapiVersion), module name, description, endpointCount, and endpoints array with structured fields
+- **THEN** the skill SHALL produce a JSON document with meta (sourceUrl, generatedAt, openapiVersion), module name, description, endpointCount, and endpoints array
 
 #### Scenario: Multiple modules in output
 - **WHEN** multiple modules are selected
@@ -97,14 +99,14 @@ The skill SHALL offer two output modes: direct display in conversation or file p
 
 #### Scenario: File persistence mode
 - **WHEN** user selects output mode "B" (save files)
-- **THEN** the skill SHALL write `.md` and `.json` files to `api-doc-parser/.output/` directory with module name as filename, and display a summary with file paths in the conversation
+- **THEN** the skill SHALL write `.md` and `.json` files to `api-doc-parser/.output/` directory with module name as filename, and display a summary with file paths
 
 ### Requirement: Context overflow prevention
 The skill SHALL prevent large raw JSON documents from entering the Agent context by using shell-level filtering.
 
 #### Scenario: URL source large document
 - **WHEN** fetching a large OpenAPI JSON from URL
-- **THEN** the skill SHALL use curl to write to a temporary file and jq pipelines to extract only needed data (tags, filtered paths) before any content enters the Agent context
+- **THEN** the skill SHALL use curl to write to a temporary file and jq pipelines to extract only needed data
 
 #### Scenario: Local JSON file large document
 - **WHEN** reading a large local JSON file (>256KB)
@@ -112,7 +114,7 @@ The skill SHALL prevent large raw JSON documents from entering the Agent context
 
 #### Scenario: Large module endpoint count
 - **WHEN** a selected module has more than 30 endpoints
-- **THEN** the skill SHALL first display a summary with endpoint count and list, and ask the user whether to proceed with full parsing
+- **THEN** the skill SHALL first display a summary and ask the user whether to proceed with full parsing
 
 ### Requirement: Cross-platform command registration
 The skill SHALL support invocation via slash commands across Claude Code, Cursor, Codex, Gemini, Qoder, OpenCode, and Copilot platforms with a unified `doc` prefix.
