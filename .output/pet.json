@@ -1,0 +1,1292 @@
+{
+  "meta": {
+    "sourceUrl": "https://petstore3.swagger.io/api/v3/openapi.json",
+    "generatedAt": "2026-06-16T05:52:35Z",
+    "openapiVersion": "3.0.4"
+  },
+  "module": {
+    "name": "pet",
+    "description": "Everything about your Pets"
+  },
+  "endpointCount": 8,
+  "endpoints": [
+    {
+      "path": "/pet",
+      "method": "PUT",
+      "summary": "Update an existing pet.",
+      "description": "Update an existing pet by Id.",
+      "operationId": "updatePet",
+      "parameters": [],
+      "requestBody": {
+        "required": true,
+        "contentType": "application/json",
+        "schema": {
+          "name": "Pet",
+          "description": "(无描述)",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "format": "int64",
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "format": null,
+              "description": "(无描述)",
+              "required": true,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "category",
+              "type": "object",
+              "format": null,
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": "Category"
+            },
+            {
+              "name": "photoUrls",
+              "type": "array<string>",
+              "format": null,
+              "description": "(无描述)",
+              "required": true,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "tags",
+              "type": "array<Tag>",
+              "format": null,
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": "Tag"
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "format": null,
+              "description": "pet status in the store",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            }
+          ],
+          "nestedSchemas": {
+            "Category": {
+              "name": "Category",
+              "description": "(无描述)",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "format": null,
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                }
+              ],
+              "nestedSchemas": {}
+            },
+            "Tag": {
+              "name": "Tag",
+              "description": "(无描述)",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "format": null,
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                }
+              ],
+              "nestedSchemas": {}
+            }
+          }
+        }
+      },
+      "responses": [
+        {
+          "status": "200",
+          "description": "Successful operation",
+          "schema": {
+            "name": "Pet",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "category",
+                "type": "object",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Category"
+              },
+              {
+                "name": "photoUrls",
+                "type": "array<string>",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "tags",
+                "type": "array<Tag>",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Tag"
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "pet status in the store",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {
+              "Category": {
+                "name": "Category",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              },
+              "Tag": {
+                "name": "Tag",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              }
+            }
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid ID supplied",
+          "schema": null
+        },
+        {
+          "status": "404",
+          "description": "Pet not found",
+          "schema": null
+        },
+        {
+          "status": "422",
+          "description": "Validation exception",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/pet",
+      "method": "POST",
+      "summary": "Add a new pet to the store.",
+      "description": "Add a new pet to the store.",
+      "operationId": "addPet",
+      "parameters": [],
+      "requestBody": {
+        "required": true,
+        "contentType": "application/json",
+        "schema": {
+          "name": "Pet",
+          "description": "(无描述)",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "format": "int64",
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "format": null,
+              "description": "(无描述)",
+              "required": true,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "category",
+              "type": "object",
+              "format": null,
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": "Category"
+            },
+            {
+              "name": "photoUrls",
+              "type": "array<string>",
+              "format": null,
+              "description": "(无描述)",
+              "required": true,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "tags",
+              "type": "array<Tag>",
+              "format": null,
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": "Tag"
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "format": null,
+              "description": "pet status in the store",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            }
+          ],
+          "nestedSchemas": {
+            "Category": {
+              "name": "Category",
+              "description": "(无描述)",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "format": null,
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                }
+              ],
+              "nestedSchemas": {}
+            },
+            "Tag": {
+              "name": "Tag",
+              "description": "(无描述)",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "format": null,
+                  "description": "(无描述)",
+                  "required": false,
+                  "default": null,
+                  "nestedSchema": null
+                }
+              ],
+              "nestedSchemas": {}
+            }
+          }
+        }
+      },
+      "responses": [
+        {
+          "status": "200",
+          "description": "Successful operation",
+          "schema": {
+            "name": "Pet",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "category",
+                "type": "object",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Category"
+              },
+              {
+                "name": "photoUrls",
+                "type": "array<string>",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "tags",
+                "type": "array<Tag>",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Tag"
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "pet status in the store",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {
+              "Category": {
+                "name": "Category",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              },
+              "Tag": {
+                "name": "Tag",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              }
+            }
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid input",
+          "schema": null
+        },
+        {
+          "status": "422",
+          "description": "Validation exception",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/pet/findByStatus",
+      "method": "GET",
+      "summary": "Finds Pets by status.",
+      "description": "Multiple status values can be provided with comma separated strings.",
+      "operationId": "findPetsByStatus",
+      "parameters": [
+        {
+          "name": "status",
+          "in": "query",
+          "description": "Status values that need to be considered for filter",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": null,
+            "default": "available"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": {
+            "name": "Pet",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "category",
+                "type": "object",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Category"
+              },
+              {
+                "name": "photoUrls",
+                "type": "array<string>",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "tags",
+                "type": "array<Tag>",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Tag"
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "pet status in the store",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {
+              "Category": {
+                "name": "Category",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              },
+              "Tag": {
+                "name": "Tag",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              }
+            }
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid status value",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/pet/findByTags",
+      "method": "GET",
+      "summary": "Finds Pets by tags.",
+      "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+      "operationId": "findPetsByTags",
+      "parameters": [
+        {
+          "name": "tags",
+          "in": "query",
+          "description": "Tags to filter by",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "format": null,
+            "default": null
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": {
+            "name": "Pet",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "category",
+                "type": "object",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Category"
+              },
+              {
+                "name": "photoUrls",
+                "type": "array<string>",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "tags",
+                "type": "array<Tag>",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Tag"
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "pet status in the store",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {
+              "Category": {
+                "name": "Category",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              },
+              "Tag": {
+                "name": "Tag",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              }
+            }
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid tag value",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "GET",
+      "summary": "Find pet by ID.",
+      "description": "Returns a single pet.",
+      "operationId": "getPetById",
+      "parameters": [
+        {
+          "name": "petId",
+          "in": "path",
+          "description": "ID of pet to return",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "default": null
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": {
+            "name": "Pet",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "category",
+                "type": "object",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Category"
+              },
+              {
+                "name": "photoUrls",
+                "type": "array<string>",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "tags",
+                "type": "array<Tag>",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Tag"
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "pet status in the store",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {
+              "Category": {
+                "name": "Category",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              },
+              "Tag": {
+                "name": "Tag",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              }
+            }
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid ID supplied",
+          "schema": null
+        },
+        {
+          "status": "404",
+          "description": "Pet not found",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "POST",
+      "summary": "Updates a pet in the store with form data.",
+      "description": "Updates a pet resource based on the form data.",
+      "operationId": "updatePetWithForm",
+      "parameters": [
+        {
+          "name": "petId",
+          "in": "path",
+          "description": "ID of pet that needs to be updated",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "default": null
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "description": "Name of pet that needs to be updated",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": null,
+            "default": null
+          }
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "description": "Status of pet that needs to be updated",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": null,
+            "default": null
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": {
+            "name": "Pet",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "category",
+                "type": "object",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Category"
+              },
+              {
+                "name": "photoUrls",
+                "type": "array<string>",
+                "format": null,
+                "description": "(无描述)",
+                "required": true,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "tags",
+                "type": "array<Tag>",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": "Tag"
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "pet status in the store",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {
+              "Category": {
+                "name": "Category",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              },
+              "Tag": {
+                "name": "Tag",
+                "description": "(无描述)",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  },
+                  {
+                    "name": "name",
+                    "type": "string",
+                    "format": null,
+                    "description": "(无描述)",
+                    "required": false,
+                    "default": null,
+                    "nestedSchema": null
+                  }
+                ],
+                "nestedSchemas": {}
+              }
+            }
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid input",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "DELETE",
+      "summary": "Deletes a pet.",
+      "description": "Delete a pet.",
+      "operationId": "deletePet",
+      "parameters": [
+        {
+          "name": "api_key",
+          "in": "header",
+          "description": "(无描述)",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": null,
+            "default": null
+          }
+        },
+        {
+          "name": "petId",
+          "in": "path",
+          "description": "Pet id to delete",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "default": null
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "Pet deleted",
+          "schema": null
+        },
+        {
+          "status": "400",
+          "description": "Invalid pet value",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/pet/{petId}/uploadImage",
+      "method": "POST",
+      "summary": "Uploads an image.",
+      "description": "Upload image of the pet.",
+      "operationId": "uploadFile",
+      "parameters": [
+        {
+          "name": "petId",
+          "in": "path",
+          "description": "ID of pet to update",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "default": null
+          }
+        },
+        {
+          "name": "additionalMetadata",
+          "in": "query",
+          "description": "Additional Metadata",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": null,
+            "default": null
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": {
+            "name": "ApiResponse",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "code",
+                "type": "integer",
+                "format": "int32",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "message",
+                "type": "string",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {}
+          }
+        },
+        {
+          "status": "400",
+          "description": "No file uploaded",
+          "schema": null
+        },
+        {
+          "status": "404",
+          "description": "Pet not found",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    }
+  ]
+}

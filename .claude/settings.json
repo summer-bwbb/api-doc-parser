@@ -3,7 +3,25 @@
     "allow": [
       "Bash(git commit -m 'Sync openspec delta specs to main specs *)",
       "Bash(cat .claude/settings.json)",
-      "Bash(cat .claude/settings.local.json)"
+      "Bash(cat .claude/settings.local.json)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/tmp/petstore.json'\\)\\); print\\(type\\(d\\).__name__, d.get\\('openapi'\\)\\)\")",
+      "Bash(python3 -c \"print\\('ok'\\)\")",
+      "Bash(py -3 parse.py --state /d/tmp/api-doc-parser/state.json --mode B --output-dir \"D:/summer/Agent Skills/api-doc-parser/.output\")",
+      "Bash(curl -s \"https://api.apis.guru/v2/specs/instagram.com/1.0.0/openapi.json\" -o /d/tmp/instagram.json)",
+      "Bash(curl -s \"https://api.apis.guru/v2/specs/github.com/api.github.com.2022-11-28/openapi.json\" -o /d/tmp/github.json)",
+      "Bash(py -3 -c \"import json; d=json.load\\(open\\('D:/tmp/github.json', encoding='utf-8'\\)\\); print\\('openapi:', d.get\\('openapi'\\), 'paths:', len\\(d.get\\('paths', {}\\)\\), 'tags:', len\\(d.get\\('tags', []\\)\\)\\)\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/ghes-3.15/ghes-3.15.json\" -o /d/tmp/github-large.json)",
+      "Bash(py -3 -c \"import json; d=json.load\\(open\\('D:/tmp/github-large.json', encoding='utf-8'\\)\\); print\\('openapi:', d.get\\('openapi'\\), 'paths:', len\\(d.get\\('paths', {}\\)\\), 'tags:', len\\(d.get\\('tags', []\\)\\)\\)\")",
+      "Bash(curl -sL --max-time 30 \"https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore-expanded.json\" -o /d/tmp/petstore-expanded.json)",
+      "Bash(py -3 -c \"import json; d=json.load\\(open\\('D:/tmp/petstore-expanded.json', encoding='utf-8'\\)\\); print\\('openapi:', d.get\\('openapi'\\), 'paths:', len\\(d.get\\('paths', {}\\)\\), 'tags:', len\\(d.get\\('tags', []\\)\\)\\)\")",
+      "Bash(curl -sL --max-time 30 \"https://generator3.swagger.io/openapi.json\" -o /d/tmp/swagger-generator.json)",
+      "Bash(py -3 -c \"import json; d=json.load\\(open\\('D:/tmp/swagger-generator.json', encoding='utf-8'\\)\\); print\\('openapi:', d.get\\('openapi'\\), 'paths:', len\\(d.get\\('paths', {}\\)\\), 'tags:', len\\(d.get\\('tags', []\\)\\)\\)\")",
+      "Bash(curl -sL --max-time 60 \"https://api.apis.guru/v2/specs/adyen.com/CheckoutService/71/openapi.json\" -o /d/tmp/adyen.json)",
+      "Bash(py -3 -c \"import json; d=json.load\\(open\\('D:/tmp/adyen.json', encoding='utf-8'\\)\\); print\\('openapi:', d.get\\('openapi'\\), 'paths:', len\\(d.get\\('paths', {}\\)\\), 'tags:', len\\(d.get\\('tags', []\\)\\)\\)\")",
+      "Bash(curl -sL --max-time 60 \"https://api.apis.guru/v2/specs/1password.com/connect/1.3.0/openapi.json\" -o /d/tmp/1password.json)",
+      "Bash(py -3 -c \"import json; d=json.load\\(open\\('D:/tmp/1password.json', encoding='utf-8'\\)\\); print\\('openapi:', d.get\\('openapi'\\), 'paths:', len\\(d.get\\('paths', {}\\)\\), 'tags:', len\\(d.get\\('tags', []\\)\\)\\)\")",
+      "Bash(curl -sL --max-time 60 \"https://petstore3.swagger.io/api/v3/openapi.json\" -o /d/tmp/petstore3.json)",
+      "Bash(py -3 -c \"import json; d=json.load\\(open\\('D:/tmp/petstore-large.json', encoding='utf-8'\\)\\); print\\('type:', type\\(d\\).__name__\\)\")"
     ]
   }
 }

@@ -1,0 +1,336 @@
+{
+  "meta": {
+    "sourceUrl": "https://petstore3.swagger.io/api/v3/openapi.json",
+    "generatedAt": "2026-06-16T05:52:35Z",
+    "openapiVersion": "3.0.4"
+  },
+  "module": {
+    "name": "store",
+    "description": "Access to Petstore orders"
+  },
+  "endpointCount": 4,
+  "endpoints": [
+    {
+      "path": "/store/inventory",
+      "method": "GET",
+      "summary": "Returns pet inventories by status.",
+      "description": "Returns a map of status codes to quantities.",
+      "operationId": "getInventory",
+      "parameters": [],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/store/order",
+      "method": "POST",
+      "summary": "Place an order for a pet.",
+      "description": "Place a new order in the store.",
+      "operationId": "placeOrder",
+      "parameters": [],
+      "requestBody": {
+        "required": false,
+        "contentType": "application/json",
+        "schema": {
+          "name": "Order",
+          "description": "(无描述)",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "format": "int64",
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "petId",
+              "type": "integer",
+              "format": "int64",
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "quantity",
+              "type": "integer",
+              "format": "int32",
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "shipDate",
+              "type": "string",
+              "format": "date-time",
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "format": null,
+              "description": "Order Status",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            },
+            {
+              "name": "complete",
+              "type": "boolean",
+              "format": null,
+              "description": "(无描述)",
+              "required": false,
+              "default": null,
+              "nestedSchema": null
+            }
+          ],
+          "nestedSchemas": {}
+        }
+      },
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": {
+            "name": "Order",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "petId",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "quantity",
+                "type": "integer",
+                "format": "int32",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "shipDate",
+                "type": "string",
+                "format": "date-time",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "Order Status",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "complete",
+                "type": "boolean",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {}
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid input",
+          "schema": null
+        },
+        {
+          "status": "422",
+          "description": "Validation exception",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/store/order/{orderId}",
+      "method": "GET",
+      "summary": "Find purchase order by ID.",
+      "description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
+      "operationId": "getOrderById",
+      "parameters": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "ID of order that needs to be fetched",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "default": null
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "successful operation",
+          "schema": {
+            "name": "Order",
+            "description": "(无描述)",
+            "fields": [
+              {
+                "name": "id",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "petId",
+                "type": "integer",
+                "format": "int64",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "quantity",
+                "type": "integer",
+                "format": "int32",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "shipDate",
+                "type": "string",
+                "format": "date-time",
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "format": null,
+                "description": "Order Status",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              },
+              {
+                "name": "complete",
+                "type": "boolean",
+                "format": null,
+                "description": "(无描述)",
+                "required": false,
+                "default": null,
+                "nestedSchema": null
+              }
+            ],
+            "nestedSchemas": {}
+          }
+        },
+        {
+          "status": "400",
+          "description": "Invalid ID supplied",
+          "schema": null
+        },
+        {
+          "status": "404",
+          "description": "Order not found",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    },
+    {
+      "path": "/store/order/{orderId}",
+      "method": "DELETE",
+      "summary": "Delete purchase order by identifier.",
+      "description": "For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.",
+      "operationId": "deleteOrder",
+      "parameters": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "ID of the order that needs to be deleted",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "default": null
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": [
+        {
+          "status": "200",
+          "description": "order deleted",
+          "schema": null
+        },
+        {
+          "status": "400",
+          "description": "Invalid ID supplied",
+          "schema": null
+        },
+        {
+          "status": "404",
+          "description": "Order not found",
+          "schema": null
+        },
+        {
+          "status": "default",
+          "description": "Unexpected error",
+          "schema": null
+        }
+      ]
+    }
+  ]
+}
