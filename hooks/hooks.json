@@ -3,7 +3,7 @@
     "SessionStart": [
       {
         "matcher": "startup|clear|compact",
-        "command": "cat skills/using-api-doc-parser/SKILL.md"
+        "command": "node -e \"process.stdout.write(require('fs').readFileSync(require('os').homedir()+'/.claude/skills/using-api-doc-parser/SKILL.md','utf8'))\""
       }
     ]
   }

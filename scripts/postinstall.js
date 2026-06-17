@@ -3,60 +3,65 @@
 /**
  * postinstall.js — api-doc-parser-skill
  *
- * Detects installed AI coding assistants by checking known config directories,
- * copies the project's skills/ into each detected assistant's skills directory.
- * Skips assistants that are already registered via the plugin system.
+ * Global install:
+ *   1. Copies skills/ (including parse.py, lib/) to ~/.claude/skills/
+ *   2. Copies commands/ to ~/.claude/commands/
+ *   3. Generates and copies hooks with correct absolute paths
+ * Per-assistant: copies to each detected assistant's config dir.
  */
 
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-// ----- Platform helpers -----
-const isWindows = process.platform === 'win32';
-const HOME = isWindows ? process.env.USERPROFILE : os.homedir();
+// FIX: os.homedir() works reliably on all platforms (Windows, macOS, Linux)
+const HOME = os.homedir();
 
-// ----- Known assistant config directories -----
+// ----- Version from package.json -----
+const pkg = require('../package.json');
+
+// ----- Source directories -----
+const PKG_ROOT = path.join(__dirname, '..');
+const SKILLS_SRC = path.join(PKG_ROOT, 'skills');
+
+// ----- Per-platform commands source -----
+const COMMANDS_MAP = {
+  'Claude Code': path.join(PKG_ROOT, '.claude', 'commands'),
+  'Cursor':      path.join(PKG_ROOT, '.cursor', 'commands'),
+  'Codex':       path.join(PKG_ROOT, '.codex', 'commands'),
+};
+
+// ----- Per-platform skills/commands destinations -----
 const ASSISTANTS = [
   {
     name: 'Claude Code',
-    dir: path.join(HOME, '.claude', 'skills'),
-    pluginDetected: () => {
-      // Check if this install came from claude plugins
-      return process.env.CLAUDE_PLUGIN_INSTALL === '1';
-    }
+    skillsDir:   path.join(HOME, '.claude', 'skills'),
+    commandsDir: path.join(HOME, '.claude', 'commands'),
+    hooksDir:    path.join(HOME, '.claude', 'hooks'),
+    pluginDetected: () => process.env.CLAUDE_PLUGIN_INSTALL === '1',
   },
   {
     name: 'Cursor',
-    dir: path.join(HOME, '.cursor', 'skills'),
-    pluginDetected: () => {
-      return false; // Cursor plugin detection — check for cursor plugin marker
-    }
+    skillsDir:   path.join(HOME, '.cursor', 'skills'),
+    commandsDir: path.join(HOME, '.cursor', 'commands'),
+    hooksDir:    path.join(HOME, '.cursor', 'hooks'),
+    pluginDetected: () => false,
   },
   {
     name: 'Codex',
-    dir: path.join(HOME, '.codex', 'skills'),
-    pluginDetected: () => {
-      return false;
-    }
-  }
+    skillsDir:   path.join(HOME, '.codex', 'skills'),
+    commandsDir: path.join(HOME, '.codex', 'commands'),
+    hooksDir:    path.join(HOME, '.codex', 'hooks'),
+    pluginDetected: () => false,
+  },
 ];
-
-// Source skills directory (relative to the package root)
-const SKILLS_SRC = path.join(__dirname, '..', 'skills');
 
 // ----- Functions -----
 
-/**
- * Recursively copy a directory.
- */
 function copyDir(src, dest) {
   if (!fs.existsSync(src)) return;
-
   fs.mkdirSync(dest, { recursive: true });
-
-  const entries = fs.readdirSync(src, { withFileTypes: true });
-  for (const entry of entries) {
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
     const srcPath = path.join(src, entry.name);
     const destPath = path.join(dest, entry.name);
     if (entry.isDirectory()) {
@@ -68,26 +73,27 @@ function copyDir(src, dest) {
 }
 
 /**
- * Recursively remove a directory.
+ * Generate hooks JSON with platform-appropriate absolute paths.
+ * Uses Node.js (cross-platform) instead of `cat` + `$HOME`.
  */
-function removeDir(dir) {
-  if (!fs.existsSync(dir)) return;
-
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      removeDir(fullPath);
-    } else {
-      fs.unlinkSync(fullPath);
-    }
-  }
-  fs.rmdirSync(dir);
+function generateHooksContent(skillsDir) {
+  // Use node -e for cross-platform compatibility (works on Windows, macOS, Linux)
+  const skillPath = path.join(skillsDir, 'using-api-doc-parser', 'SKILL.md').replace(/\\/g, '/');
+  return JSON.stringify({
+    hooks: {
+      SessionStart: [
+        {
+          matcher: 'startup|clear|compact',
+          command: `node -e "process.stdout.write(require('fs').readFileSync('${skillPath}','utf8'))"`,
+        },
+      ],
+    },
+  }, null, 2);
 }
 
 // ----- Main -----
 
-console.log('\n📦 api-doc-parser-skill v2.0.0 postinstall\n');
+console.log(`\n📦 api-doc-parser-skill v${pkg.version} postinstall\n`);
 
 if (!fs.existsSync(SKILLS_SRC)) {
   console.error('ERROR: skills/ directory not found at', SKILLS_SRC);
@@ -98,16 +104,15 @@ let installedCount = 0;
 let skippedCount = 0;
 
 for (const assistant of ASSISTANTS) {
-  process.stdout.write(`Checking ${assistant.name}... `);
+  process.stdout.write(`[${assistant.name}] `);
 
   if (assistant.pluginDetected()) {
-    console.log(`Plugin already registered, skipping NPM registration for ${assistant.name}`);
+    console.log('plugin already registered, skipping');
     skippedCount++;
     continue;
   }
 
-  // Check if the config directory exists (meaning the assistant is installed)
-  const configParent = path.dirname(assistant.dir);
+  const configParent = path.dirname(assistant.skillsDir);
   if (!fs.existsSync(configParent)) {
     console.log('not detected (config dir missing)');
     continue;
@@ -115,14 +120,36 @@ for (const assistant of ASSISTANTS) {
 
   console.log('detected');
 
-  // Copy skills
+  // 1. Copy skills (includes parse.py + lib/ automatically)
   try {
-    copyDir(SKILLS_SRC, assistant.dir);
-    console.log(`  ✓ Copied skills to ${assistant.dir}`);
-    installedCount++;
+    copyDir(SKILLS_SRC, assistant.skillsDir);
+    console.log(`  ✓ Skills   → ${assistant.skillsDir}`);
   } catch (err) {
-    console.error(`  ✗ Failed to copy to ${assistant.dir}: ${err.message}`);
+    console.error(`  ✗ Skills copy failed: ${err.message}`);
   }
+
+  // 2. Copy commands
+  const cmdsSrc = COMMANDS_MAP[assistant.name];
+  if (cmdsSrc && fs.existsSync(cmdsSrc)) {
+    try {
+      copyDir(cmdsSrc, assistant.commandsDir);
+      console.log(`  ✓ Commands → ${assistant.commandsDir}`);
+    } catch (err) {
+      console.error(`  ✗ Commands copy failed: ${err.message}`);
+    }
+  }
+
+  // 3. Generate and copy hooks with correct absolute paths
+  try {
+    fs.mkdirSync(assistant.hooksDir, { recursive: true });
+    const hooksContent = generateHooksContent(assistant.skillsDir);
+    fs.writeFileSync(path.join(assistant.hooksDir, 'hooks.json'), hooksContent);
+    console.log(`  ✓ Hooks    → ${path.join(assistant.hooksDir, 'hooks.json')}`);
+  } catch (err) {
+    console.error(`  ✗ Hooks generation failed: ${err.message}`);
+  }
+
+  installedCount++;
 }
 
-console.log(`\nDone: ${installedCount} assistant(s) configured, ${skippedCount} skipped (plugin-managed).\n`);
+console.log(`\nDone: ${installedCount} assistant(s) configured, ${skippedCount} skipped.\n`);

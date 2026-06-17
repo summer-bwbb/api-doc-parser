@@ -1,6 +1,6 @@
 {
   "name": "api-doc-parser",
-  "version": "2.0.0",
+  "version": "0.0.2",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module (tag).",
   "author": "summer-bwbb",
   "license": "MIT",

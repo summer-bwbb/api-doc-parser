@@ -1,0 +1,12 @@
+# Exclude from npm package
+.claude/settings.local.json
+.claude/settings.json
+.output/
+openspec/
+__pycache__/
+*.pyc
+.git/
+.github/
+.gitignore
+.DS_Store
+Thumbs.db

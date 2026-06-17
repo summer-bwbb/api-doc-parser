@@ -1,6 +1,6 @@
 {
   "name": "api-doc-parser",
-  "version": "2.0.0",
+  "version": "0.0.2",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation by module (tag), extract endpoint details, and output Markdown + structured JSON. v2 introduces a sub-skill architecture (doc-fetch, doc-list, doc-parse, doc-help) with fine-grained slash commands, supports 9 platforms (Claude Code, Cursor, Codex, Qoder, OpenCode, Trae, Kiwi, Gemini CLI, Copilot CLI), and offers 3 installation methods (plugin, NPM, manual). Built-in context overflow protection via jq pipelines.",
   "author": "summer-bwbb",
   "date": "2026-06-15",

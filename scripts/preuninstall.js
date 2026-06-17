@@ -3,53 +3,66 @@
 /**
  * preuninstall.js — api-doc-parser-skill
  *
- * Removes the copied skill files from each detected AI coding assistant's
- * skills directory. Handles errors gracefully (files may already be deleted).
+ * Removes ONLY the files this package installed (not entire directories).
+ * Skills: removes specific subdirectories (doc-fetch, doc-list, etc.)
+ * Commands: removes only fetch.md, help.md, list.md, parse.md in doc/
+ * Hooks: removes generated hooks.json if it contains our marker
  */
 
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-// ----- Platform helpers -----
-const isWindows = process.platform === 'win32';
-const HOME = isWindows ? process.env.USERPROFILE : os.homedir();
+// FIX: os.homedir() works reliably on all platforms
+const HOME = os.homedir();
 
-// ----- Known assistant config directories -----
+// ----- Version from package.json -----
+const pkg = require('../package.json');
+
+// ----- Per-assistant directories -----
 const ASSISTANTS = [
   {
     name: 'Claude Code',
-    dir: path.join(HOME, '.claude', 'skills')
+    skillsDir:   path.join(HOME, '.claude', 'skills'),
+    commandsDir: path.join(HOME, '.claude', 'commands'),
+    hooksDir:    path.join(HOME, '.claude', 'hooks'),
   },
   {
     name: 'Cursor',
-    dir: path.join(HOME, '.cursor', 'skills')
+    skillsDir:   path.join(HOME, '.cursor', 'skills'),
+    commandsDir: path.join(HOME, '.cursor', 'commands'),
+    hooksDir:    path.join(HOME, '.cursor', 'hooks'),
   },
   {
     name: 'Codex',
-    dir: path.join(HOME, '.codex', 'skills')
-  }
+    skillsDir:   path.join(HOME, '.codex', 'skills'),
+    commandsDir: path.join(HOME, '.codex', 'commands'),
+    hooksDir:    path.join(HOME, '.codex', 'hooks'),
+  },
 ];
 
-// List of skill directories to remove
+// Skill subdirectories this package creates
 const SKILL_NAMES = [
   'using-api-doc-parser',
   'doc-fetch',
   'doc-list',
   'doc-parse',
-  'doc-help'
+  'doc-help',
+];
+
+// Command files this package creates (inside commands/doc/)
+const COMMAND_FILES = [
+  'fetch.md',
+  'help.md',
+  'list.md',
+  'parse.md',
 ];
 
 // ----- Functions -----
 
-/**
- * Recursively remove a directory.
- */
 function removeDir(dir) {
   if (!fs.existsSync(dir)) return;
-
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       removeDir(fullPath);
@@ -60,40 +73,83 @@ function removeDir(dir) {
   fs.rmdirSync(dir);
 }
 
+function removeFile(filePath) {
+  if (fs.existsSync(filePath)) {
+    try {
+      fs.unlinkSync(filePath);
+      return true;
+    } catch (err) {
+      console.error(`  ⚠ Could not remove ${filePath}: ${err.message}`);
+    }
+  }
+  return false;
+}
+
 // ----- Main -----
 
-console.log('\n📦 api-doc-parser-skill v2.0.0 preuninstall\n');
+console.log(`\n📦 api-doc-parser-skill v${pkg.version} preuninstall\n`);
 
 let removedCount = 0;
 
 for (const assistant of ASSISTANTS) {
-  process.stdout.write(`Cleaning ${assistant.name}... `);
+  process.stdout.write(`[${assistant.name}] `);
 
-  if (!fs.existsSync(assistant.dir)) {
-    console.log('nothing to clean (skills dir missing)');
-    continue;
-  }
+  let itemsRemoved = 0;
 
-  let assistantRemoved = 0;
-  for (const skillName of SKILL_NAMES) {
-    const skillDir = path.join(assistant.dir, skillName);
-    try {
-      if (fs.existsSync(skillDir)) {
-        removeDir(skillDir);
-        assistantRemoved++;
+  // 1. Remove skill directories
+  if (fs.existsSync(assistant.skillsDir)) {
+    for (const skillName of SKILL_NAMES) {
+      const skillDir = path.join(assistant.skillsDir, skillName);
+      try {
+        if (fs.existsSync(skillDir)) {
+          removeDir(skillDir);
+          itemsRemoved++;
+        }
+      } catch (err) {
+        console.error(`  ⚠ Could not remove ${skillDir}: ${err.message}`);
       }
-    } catch (err) {
-      // Graceful — files may already be deleted
-      console.error(`\n  ⚠ Could not remove ${skillDir}: ${err.message}`);
     }
   }
 
-  if (assistantRemoved > 0) {
-    console.log(`removed ${assistantRemoved} skill(s)`);
-    removedCount += assistantRemoved;
+  // 2. Remove ONLY our command files (not the entire doc/ directory)
+  const docCmdDir = path.join(assistant.commandsDir, 'doc');
+  if (fs.existsSync(docCmdDir)) {
+    for (const cmdFile of COMMAND_FILES) {
+      if (removeFile(path.join(docCmdDir, cmdFile))) {
+        itemsRemoved++;
+      }
+    }
+    // Remove doc/ dir only if it's now empty
+    try {
+      const remaining = fs.readdirSync(docCmdDir);
+      if (remaining.length === 0) {
+        fs.rmdirSync(docCmdDir);
+      }
+    } catch (err) {
+      // Ignore — dir may have other files from other packages
+    }
+  }
+
+  // 3. Remove generated hooks.json (only if it references our skill)
+  const hooksFile = path.join(assistant.hooksDir, 'hooks.json');
+  if (fs.existsSync(hooksFile)) {
+    try {
+      const content = fs.readFileSync(hooksFile, 'utf8');
+      if (content.includes('using-api-doc-parser')) {
+        fs.unlinkSync(hooksFile);
+        itemsRemoved++;
+      }
+    } catch (err) {
+      console.error(`  ⚠ Could not check/remove ${hooksFile}: ${err.message}`);
+    }
+  }
+
+  if (itemsRemoved > 0) {
+    console.log(`removed ${itemsRemoved} item(s)`);
+    removedCount += itemsRemoved;
   } else {
     console.log('nothing to clean');
   }
 }
 
-console.log(`\nDone: ${removedCount} skill director${removedCount === 1 ? 'y' : 'ies'} removed.\n`);
+console.log(`\nDone: ${removedCount} item(s) removed.\n`);
