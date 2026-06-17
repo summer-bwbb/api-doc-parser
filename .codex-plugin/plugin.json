@@ -2,7 +2,7 @@
   "name": "api-doc-parser",
   "version": "2.0.0",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation.",
-  "author": "summer-xbw",
+  "author": "summer-bwbb",
   "license": "MIT",
   "skills": ".codex/skills/",
   "commands": ".codex/commands/",

@@ -391,7 +391,7 @@ Read the instructions in `skills/doc-fetch/SKILL.md` and execute them for the pr
   "version": "2.0.0",
   "displayName": "API Doc Parser",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module.",
-  "author": { "name": "summer-xbw" },
+  "author": { "name": "summer-bwbb" },
   "license": "MIT",
   "keywords": ["openapi", "swagger", "api-docs", "documentation"],
   "category": "developer-tools",

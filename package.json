@@ -2,7 +2,7 @@
   "name": "api-doc-parser-skill",
   "version": "0.0.1",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation with fine-grained sub-skills. Supports 9 AI coding platforms, 3 installation methods.",
-  "author": "summer-xbw",
+  "author": "summer-bwbb",
   "license": "MIT",
   "keywords": ["api", "openapi", "swagger", "documentation", "parser", "agent-skill", "ai-coding-assistant"],
   "files": [
@@ -33,6 +33,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/summer-xbw/api-doc-parser"
+    "url": "https://github.com/summer-bwbb/api-doc-parser"
   }
 }

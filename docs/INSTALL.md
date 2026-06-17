@@ -95,7 +95,7 @@ Use when you need full control over the installation, or in environments without
 ### Global manual install
 
 ```bash
-git clone https://github.com/summer-xbw/api-doc-parser.git /tmp/api-doc-parser
+git clone https://github.com/summer-bwbb/api-doc-parser.git /tmp/api-doc-parser
 cp -r /tmp/api-doc-parser/skills/* ~/.claude/skills/
 ```
 
@@ -104,7 +104,7 @@ cp -r /tmp/api-doc-parser/skills/* ~/.claude/skills/
 Copy the skills directory directly into your project:
 
 ```bash
-git clone https://github.com/summer-xbw/api-doc-parser.git /tmp/api-doc-parser
+git clone https://github.com/summer-bwbb/api-doc-parser.git /tmp/api-doc-parser
 cp -r /tmp/api-doc-parser/skills/* <project>/.claude/skills/
 ```
 

@@ -3,9 +3,10 @@
 [![Agent Skill](https://img.shields.io/badge/Agent-Skill-6366f1)](SKILL.md)
 [![OpenAPI](https://img.shields.io/badge/OpenAPI-3.x-6ba539)](https://spec.openapis.org/oas/v3.1.0)
 [![Swagger](https://img.shields.io/badge/Swagger-2.0-85ea2d)](https://swagger.io/specification/v2/)
-[![Version](https://img.shields.io/badge/version-2.0.0-blue)](metadata.json)
+[![Version](https://img.shields.io/badge/version-0.0.1-blue)](metadata.json)
 [![Platforms](https://img.shields.io/badge/platforms-9-8b5cf6)](docs/INSTALL.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![GitHub](https://img.shields.io/badge/GitHub-summer--bwbb/api--doc--parser-181717?logo=github)](https://github.com/summer-bwbb/api-doc-parser)
 
 ---
 
@@ -38,8 +39,8 @@ Choose one of three methods:
 | Method | Command | Best For |
 |--------|---------|----------|
 | **Plugin** (Claude Code) | `claude plugins install api-doc-parser` | Claude Code users |
-| **NPM** | `npm install -g api-doc-parser` | Cross-platform, auto-updates |
-| **Manual** | `git clone <repo> && cp -r api-doc-parser ~/.claude/skills/` | Custom setups, offline |
+| **NPM** | `npm install -g api-doc-parser-skill` | Cross-platform, auto-updates |
+| **Manual** | `git clone https://github.com/summer-bwbb/api-doc-parser.git && cp -r api-doc-parser/skills/* ~/.claude/skills/` | Custom setups, offline |
 
 See [docs/INSTALL.md](docs/INSTALL.md) for detailed per-platform instructions.
 

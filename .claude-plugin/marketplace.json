@@ -1,13 +1,13 @@
 {
   "name": "api-doc-parser",
   "description": "Parse OpenAPI/Swagger API documentation with fine-grained sub-skills (fetch, list, parse). Supports slash commands across 9 AI coding platforms.",
-  "owner": "summer-xbw",
+  "owner": "summer-bwbb",
   "plugins": [
     {
       "name": "api-doc-parser",
       "version": "2.0.0",
       "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module.",
-      "author": "summer-xbw",
+      "author": "summer-bwbb",
       "license": "MIT"
     }
   ]

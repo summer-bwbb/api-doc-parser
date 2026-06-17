@@ -1565,7 +1565,7 @@ mkdir -p .claude-plugin
   "version": "2.0.0",
   "displayName": "API Doc Parser",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module.",
-  "author": { "name": "summer-xbw" },
+  "author": { "name": "summer-bwbb" },
   "license": "MIT",
   "keywords": ["openapi", "swagger", "api-docs", "documentation"],
   "category": "developer-tools",
@@ -1580,7 +1580,7 @@ mkdir -p .claude-plugin
 {
   "name": "API Doc Parser",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module (tag) with dual-format output: Markdown (human-readable) and JSON (machine-readable). Supports URL fetch and local file import.",
-  "owner": "summer-xbw",
+  "owner": "summer-bwbb",
   "plugins": [
     {
       "name": "api-doc-parser",
@@ -1604,7 +1604,7 @@ mkdir -p .cursor-plugin
   "version": "2.0.0",
   "displayName": "API Doc Parser",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module.",
-  "author": { "name": "summer-xbw" },
+  "author": { "name": "summer-bwbb" },
   "license": "MIT",
   "keywords": ["openapi", "swagger", "api-docs", "documentation"],
   "category": "developer-tools",
@@ -1625,7 +1625,7 @@ mkdir -p .codex-plugin
   "version": "2.0.0",
   "displayName": "API Doc Parser",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module.",
-  "author": { "name": "summer-xbw" },
+  "author": { "name": "summer-bwbb" },
   "license": "MIT",
   "keywords": ["openapi", "swagger", "api-docs", "documentation"],
   "category": "developer-tools",
@@ -1665,7 +1665,7 @@ All manifests reference skills/ and commands/ directories. Version 2.0.0."
   "version": "2.0.0",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation. Extract endpoint details by module (tag) with dual-format output (Markdown + JSON). 5 sub-skills, 9-platform support.",
   "author": {
-    "name": "summer-xbw"
+    "name": "summer-bwbb"
   },
   "license": "MIT",
   "keywords": [
@@ -2300,7 +2300,7 @@ npm uninstall -g api-doc-parser-skill
 ### Global (all projects)
 
 ```bash
-git clone https://github.com/summer-xbw/api-doc-parser.git ~/.claude/plugins/api-doc-parser
+git clone https://github.com/summer-bwbb/api-doc-parser.git ~/.claude/plugins/api-doc-parser
 
 # Add to .claude/settings.json (global):
 {
@@ -2605,7 +2605,7 @@ Change version from `"1.0.0"` to `"2.0.0"` and update description:
   "name": "api-doc-parser",
   "version": "2.0.0",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation by module (tag), extract endpoint details, and output Markdown + structured JSON. Supports URL fetch and local file import with built-in context overflow protection via jq pipelines. v2 adds: 5 sub-skills, 9-platform slash commands, Plugin/NPM/Manual install, SessionStart hook, and cross-phase state persistence.",
-  "author": "summer-xbw",
+  "author": "summer-bwbb",
   "date": "2026-06-15",
   "references": [
     "https://swagger.io/specification/",
