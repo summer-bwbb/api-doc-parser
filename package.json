@@ -1,6 +1,6 @@
 {
   "name": "api-doc-parser-skill",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Parse OpenAPI 3.x / Swagger 2.0 API documentation with fine-grained sub-skills. Supports 9 AI coding platforms, 3 installation methods.",
   "author": "summer-bwbb",
   "license": "MIT",
